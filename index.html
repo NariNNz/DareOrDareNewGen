@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dare or Dare</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Prompt:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#0a0310;--bg2:#1b0a30;--card:#241040;--line:#5b2a99;--pu:#9b3dff;--neon:#d27bff;--tx:#f3e8ff;--mut:#a98cc9;--hot:#ff4fd8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%) fixed;color:var(--tx);font-family:'Prompt',system-ui,sans-serif;line-height:1.6;overflow:hidden}
+#app{height:100%;display:flex;flex-direction:column;max-width:900px;margin:0 auto}
+main{flex:1;min-height:0;overflow-y:auto;padding:16px 18px 24px;-webkit-overflow-scrolling:touch}
+.scr{display:none;min-height:100%}.scr.on{display:flex;flex-direction:column}
+h1{font-family:'Bungee Inline','Impact',sans-serif;font-weight:400;margin:0;text-align:center;line-height:1;letter-spacing:.02em;color:#fff;
+text-shadow:0 0 10px var(--neon),0 0 28px var(--pu),0 0 60px var(--pu)}
+.logo{font-size:clamp(48px,13vw,110px);padding:2vh 0 4px}
+.by{text-align:center;font-size:12px;color:var(--mut);margin:0 0 16px}
+.rules{flex:none;background:rgba(36,16,64,.85);border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-size:14px}
+.rules h2{margin:0 0 10px;font-size:18px;color:#fff;font-weight:600;text-align:center;text-shadow:0 0 12px var(--pu)}
+.rules ol{margin:0;padding-left:20px}.rules li{margin:0 0 8px;color:#e6d6fb}
+nav{display:flex;gap:10px;padding:10px 14px 12px;border-top:1px solid var(--line);background:rgba(10,3,16,.92)}
+nav button{flex:1;height:48px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--tx);font:600 15px 'Prompt',sans-serif;cursor:pointer}
+nav button.on{background:linear-gradient(135deg,var(--pu),#6a1fd1);border-color:var(--neon);box-shadow:0 0 18px rgba(155,61,255,.5)}
+button:focus-visible,textarea:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+.mini{font-family:'Bungee Inline',sans-serif;font-size:20px;text-align:center;cursor:pointer;margin:0 0 10px;text-shadow:0 0 12px var(--pu)}
+.lv{text-align:center;color:var(--neon);font-weight:600;letter-spacing:.04em}
+.left{text-align:center;color:var(--mut);font-size:13px;margin-bottom:12px}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;padding:6px 0 14px}
+.card{width:min(100%,520px);min-height:min(48vh,360px);border-radius:24px;border:1.5px solid var(--neon);background:linear-gradient(160deg,#2f1457,#160726);
+box-shadow:0 0 40px rgba(155,61,255,.35);padding:28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+.card .t{font-size:clamp(20px,5.2vw,30px);font-weight:500;line-height:1.5}
+.card.sp{border-color:var(--hot);box-shadow:0 0 44px rgba(255,79,216,.4)}
+.badge{background:var(--hot);color:#1a0010;font-weight:600;font-size:13px;padding:2px 14px;border-radius:99px}
+.card.flip{animation:fl .35s ease}
+@keyframes fl{from{transform:rotateY(90deg);opacity:.2}to{transform:none;opacity:1}}
+.big{display:block;margin:0 auto;min-width:200px;height:54px;padding:0 30px;border-radius:16px;border:0;background:linear-gradient(135deg,var(--pu),var(--hot));color:#fff;font:600 17px 'Prompt',sans-serif;cursor:pointer;box-shadow:0 0 24px rgba(210,123,255,.5)}
+#nxt{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px));height:42px;padding:0 18px;border-radius:99px;border:1px solid var(--neon);background:var(--bg2);color:var(--tx);font:600 14px 'Prompt',sans-serif;cursor:pointer;display:none;z-index:5}
+#nxt.on{display:block}
+.end .t{font-size:clamp(20px,5vw,28px)}
+textarea{width:100%;min-height:150px;border-radius:16px;border:1px solid var(--line);background:rgba(36,16,64,.7);color:var(--tx);font:16px 'Prompt',sans-serif;padding:14px;resize:vertical}
+.msg{background:rgba(36,16,64,.8);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px;white-space:pre-wrap;word-break:break-word}
+.msg small{display:flex;justify-content:space-between;color:var(--mut);margin-top:6px}
+.msg small button{background:none;border:0;color:var(--hot);cursor:pointer;font:inherit}
+.note{color:var(--mut);font-size:13px;text-align:center;margin:10px 0}
+nav a{flex:1;height:48px;border-radius:14px;border:1px solid var(--line);color:var(--tx);font:600 15px 'Prompt',sans-serif;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.top .mini{margin:0}
+.snd{width:36px;height:36px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--tx);cursor:pointer;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;padding:6px 0 80px}
+.c{aspect-ratio:2/3;border-radius:12px;border:1.5px solid var(--neon);background:repeating-linear-gradient(45deg,#2f1457 0 8px,#241040 8px 16px);color:var(--neon);font:400 18px 'Bungee Inline',sans-serif;cursor:pointer;box-shadow:0 0 14px rgba(155,61,255,.35);transition:transform .15s}
+.c:hover{transform:translateY(-3px)}.c.used{opacity:.15;pointer-events:none;box-shadow:none}
+.ovl{position:fixed;inset:0;z-index:20;background:rgba(5,1,10,.88);display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+.ovl.on{display:flex}
+@media (prefers-reduced-motion:reduce){.card.flip{animation:none}}
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+ <section id="home" class="scr on">
+  <h1 class="logo">Dare or Dare</h1>
+  <p class="by">(by K.Nari)</p>
+  <div class="rules">
+   <h2>กติกาและวิธีการเล่น</h2>
+   <ol>
+    <li>Dare or Dare เป็นเว็บไซต์การ์ดเกมที่ทำมาเพื่อความสนุกเท่านั้น ขอให้ทุกท่านเล่นกันอย่างมีความสุขนะ หากมีปัญหา หรือ ข้อเสนอแนะ สามารถส่งข้อความใน Nari's Box ได้เลย݁ ˖Ი𐑼⋆</li>
+    <li>ก่อนเริ่มเกม ผู้เล่นจะต้องดื่มคนละ 4 วินาที (เทเครื่องดื่มใส่ปากเป็นเวลา 3 วินาที)</li>
+    <li>เมื่อเกมเริ่ม ผู้เล่นจะต้องทำตามคำสั่งในการ์ด หากไม่ทำตามจะต้องดื่ม 1 ช็อต หรือถ้าอีกฝ่ายไม่ยอมให้ทำ อีกฝ่ายต้องดื่ม 1 ช็อต</li>
+    <li>ในเกมจะมีการ์ดพิเศษอยู่ ในการ์ดจะระบุชัดเจนว่าฝ่ายไหนเป็นคนทำ และจะต้องทำตามเท่านั้น หากไม่ยอมทำทั้งสองฝ่ายจะต้อง ดื่มคนละ 2 ช็อต</li>
+    <li>อย่าเผลอทำเกินคำสั่งการ์ดนะ ! (˶˃𐃷˂˶)</li>
+   </ol>
+  </div>
+ </section>
+
+ <section id="play" class="scr">
+  <div class="top"><span style="width:36px"></span><div class="mini" data-go="home">Dare or Dare</div><button class="snd" id="snd" aria-label="เปิด/ปิดเสียง">🔊</button></div>
+  <div class="lv" id="lvn"></div>
+  <div class="left" id="left"></div>
+  <div class="grid" id="grid"></div>
+  <div id="endbox" style="display:none"><div class="stage"><div class="card end" id="endcard"></div></div><button class="big" id="again">เล่นใหม่</button></div>
+ </section>
+</main>
+<div class="ovl" id="ovl"><div class="card" id="card"></div><button class="big" id="ok">ตกลง</button></div>
+<button id="nxt">Next Level</button>
+<nav><button id="nPlay">Play</button><a id="nBox" href="https://forms.gle/Dewwer9knnphDM1u5" target="_blank" rel="noopener">Nari's Box</a></nav>
+</div>
+
+<script>
+var L=[
+["จูบแลกเหล้า 1 ช็อตจากปากอีกฝ่าย","จูบจ้องตากันแบบห้ามหลับตา 30 วินาที","ถอดเสื้อผ้าของตัวเอง 3 ชิ้น","ถอดเสื้อผ้าของอีกฝ่าย 3 ชิ้น","หอมแก้มอีกฝ่าย 1 ฟอด","จูบแลกลิ้น 1 นาทีเต็ม","เอาหน้าอก/หน้าอกชนกันแล้วถูไปมา 30 วินาที","จูบไล่ตั้งแต่คอลงมาถึงหน้าอก","กอดอีกฝ่าย 30 วิ","ทำรอยที่อก","เอามือจับมืออีกฝ่ายมาวางไว้บนของลับของตัวเอง 30 วินาที","ใช้นิ้วลูบหน้าขาข้างในของอีกฝ่ายช้าๆ 30 วินาที","ดื่มเหล้าเพียวๆ 1 ช็อต","ให้อีกฝ่ายเอามือเข้ามาลูบในเสื้อผ้าตรงไหนก็ได้ 30 วินาที","ดื่มเหล้าเพียวๆ 1 ช็อต"],
+["ดูดหัวนมของอีกฝ่าย 30 วินาที","การ์ดพิเศษ นั่งตักอีกฝ่ายโดยหันหน้าเข้าหากัน","ปิดตาแล้วดูด/เลียจุดซ่อนเร้น 1 นาที","เอาน้ำแข็งอมไว้แล้วดูดหัวนมอีกฝ่าย 30 วินาที","ใช้นิ้วสะกิด/ถูจุดซ่อนเร้นของอีกฝ่ายผ่านกางเกงใน 1 นาที","ใช้เป้ากางเกงถูไถกันโดยที่ยังมีเสื้อผ้าอยู่ 1 นาที","ปิดตาอีกฝ่ายแล้วใช้ส่วนไหนของร่างกายแตะหน้าอีกฝ่าย ให้ทายว่าคืออะไร","การ์ดพิเศษ (ผญ) นั่งทับส่วนแข็ง/จุดซ่อนเร้นของอีกฝ่ายแล้วบดเอวเบาๆ 1 นาที","การ์ดพิเศษ (ผช) บีบหัวนมของ (ผญ) เป็นเวลา 20 วิ","เลียเหล้า/ผสมเครื่องดื่มบนหน้าท้องของอีกฝ่ายให้หมด","ให้ใช้นิ้วเขี่ยจุดซ่อนเร้นอีกฝ่ายจนเริ่มมีน้ำหวาน/แข็งตัว"],
+["ดูด/เลียจุดซ่อนเร้น แบบไม่ปิดตา 2 นาทีเต็ม","ใช้ปากช่วยอีกฝ่ายจนกว่าอีกฝ่ายจะร้องครางออกมา","การ์ดพิเศษ (ผช) ใช้นิ้วสอดใส่จุดซ่อนเร้นของอีกฝ่าย 1 นาที (ใช้นิ้ว 1-2 นิ้ว)","เอาน้ำแข็งอมไว้ในปากแล้วอม/เลียจุดซ่อนเร้น 30 วินาที","นอนล่างสุดให้อีกฝ่ายขึ้นมาคร่อมแล้วอม/เลียส่วนล่าง 1 นาที","การ์ดพิเศษ สั่งอีกฝ่ายให้ทำอะไรก็ได้ 1 อย่าง","การ์ดพิเศษ (ผญ) ใช้หน้าอกถูไถไปที่อวัยวะเพศของอีกฝ่าย 45 วินาที","จูบและซุกหน้าตรงหน้าขาด้านในใกล้อวัยวะเพศ 1 นาที","ใช้นิ้วเร่งจังหวะที่จุดซ่อนเร้นอีกฝ่ายอย่างรวดเร็ว 30 วินาที","การ์ดพิเศษ เอาของลับผู้ชายมาถูที่ปากช่องคลอด 30 วินาที ห้ามสอดใส่","ใช้ปากเลียไล่ตั้งแต่ต้นขาด้านในขึ้นไปจนถึงจุดซ่อนเร้น","ถอดเสื้อผ้าทุกชิ้นออก","อม/เลียจุดซ่อนเร้น พร้อมกับใช้นิ้วเล่นหัวนมอีกฝ่ายไปด้วย 1 นาที","ช่วยตัวเองต่อหน้าอีกฝ่าย 3 นาที","ใช้ปากทำความสะอาดส่วนล่างให้อีกฝ่ายหลังจากเทเครื่องดื่มลงไปเล็กน้อย","เอาเป้าชนกันแล้วถูไถแบบเนื้อแนบเนื้อเปลือยกาย 1 นาที","ให้ดูด/เลียส่วนล่างช้าๆ แบบทรมานอารมณ์ 1 นาที"],
+["อมให้ลึกที่สุดเท่าที่ทำได้ (Deepthroat) 15 วินาที / เลียเม็ดเน้นๆ 30 วินาที","ใช้นิ้วเล่นจุดซ่อนเร้นของอีกฝ่ายโดยห้ามให้อีกฝ่ายส่งเสียงร้อง (ถ้าร้องต้องโดนทำโทษดื่ม 1 ช็อต)","การ์ดพิเศษ สอดรูปร่างของจริงเข้าไปครึ่งเดียวแล้วค้างไว้ 30 วินาที (ห้ามขยับ)","การ์ดพิเศษ โดนปิดตาแล้วให้อีกฝ่ายใช้ปากทำอะไรก็ได้กับร่างกายเรา 1 นาที","ให้เลียบริเวณรอบๆ อวัยวะเพศ แต่ห้ามโดนจุดสำคัญที่สุดเป็นเวลา 1 นาที","ช่วยตัวเองให้กันและกันดูจนเกือบจะเสร็จ แล้วหยุดทันที","ถอดเสื้อผ้าออกให้หมด แล้วนอนกอดแนบเนื้อกันเฉยๆ 1 นาทีแบบห้ามขยับ"]];
+var NAMES=["𖹭 Level 1 𖹭","ʚɞ Level 2 ʚɞ","☆ Level 3 ☆","ᛝ Level 4 ᛝ"];
+var WIN=["พวกคุณเก่งเอาเรื่อง ไม่แอบนอกลู่นอกทางไปทำก่อนเลยแฮะ","มาขนาดนี้แล้ว รออะไรล่ะ กดกันสักที","ทรมานไหมล่ะ 5555 หมดเวลาเล่นเกมแล้ว","ได้เวลาลงสนาม"];
+var $=function(i){return document.getElementById(i)};
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+var S,AC=null,sndOn=true;
+function reset(){S={lvl:0,cards:[],skipped:false,done:false,msg:null};newLevel()}
+function newLevel(){S.cards=shuffle(L[S.lvl]).map(function(t){return{t:t,used:false}})}
+function tone(f,d,g,delay){
+  if(!sndOn)return;
+  setTimeout(function(){try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
+    var o=AC.createOscillator(),v=AC.createGain(),t=AC.currentTime;
+    o.type='sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*.8,t+d);
+    v.gain.setValueAtTime(.0001,t);v.gain.exponentialRampToValueAtTime(g,t+.015);v.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d+.05);
+  }catch(e){}},delay||0);
+}
+function pop(){tone(560,.22,.05,0);tone(840,.3,.025,45)}
+function soft(){tone(420,.2,.035,0);tone(630,.28,.02,40)}
+reset();
+
+function left(){return S.cards.filter(function(c){return!c.used}).length}
+function renderPlay(){
+  var g=$('grid');g.textContent='';
+  $('nxt').classList.toggle('on',page==='play'&&!S.done&&S.lvl<3);
+  $('endbox').style.display=S.done?'block':'none';
+  g.style.display=S.done?'none':'grid';
+  if(S.done){
+    $('lvn').textContent='Game Over';$('left').textContent='';
+    var e=$('endcard');e.textContent='';var t=document.createElement('div');t.className='t';t.textContent=S.msg;e.appendChild(t);return;
+  }
+  $('lvn').textContent=NAMES[S.lvl];
+  $('left').textContent='เหลือ '+left()+' ใบ จาก '+S.cards.length+' ใบ แตะไพ่เพื่อจั่ว';
+  S.cards.forEach(function(c,i){
+    var b=document.createElement('button');b.className='c'+(c.used?' used':'');b.textContent=i+1;
+    b.setAttribute('aria-label','ไพ่ใบที่ '+(i+1));
+    b.onclick=function(){openCard(i)};g.appendChild(b);
+  });
+}
+function openCard(i){
+  var c=S.cards[i];if(!c||c.used||S.done)return;
+  c.used=true;pop();
+  var card=$('card');card.className='card';card.textContent='';
+  var sp=c.t.indexOf('การ์ดพิเศษ')===0;
+  if(sp){card.classList.add('sp');var b=document.createElement('div');b.className='badge';b.textContent='การ์ดพิเศษ';card.appendChild(b)}
+  var t=document.createElement('div');t.className='t';t.textContent=sp?c.t.replace('การ์ดพิเศษ','').trim():c.t;card.appendChild(t);
+  void card.offsetWidth;card.classList.add('flip');
+  $('ovl').classList.add('on');$('ok').focus();
+}
+$('ok').onclick=function(){
+  $('ovl').classList.remove('on');soft();
+  if(left()===0){
+    if(S.lvl<3){S.lvl++;newLevel()}
+    else{S.done=true;S.msg=S.skipped?'หมดเวลาเล่นเกมแล้ว':WIN[Math.floor(Math.random()*WIN.length)]}
+  }
+  renderPlay();
+};
+$('nxt').onclick=function(){
+  if(S.done||S.lvl>=3)return;
+  soft();S.skipped=true;S.lvl++;newLevel();renderPlay();
+};
+$('again').onclick=function(){soft();reset();renderPlay()};
+$('snd').onclick=function(){sndOn=!sndOn;$('snd').textContent=sndOn?'🔊':'🔇';if(sndOn)soft()};
+
+var page='home';
+function go(p){
+  page=p;
+  ['home','play'].forEach(function(x){$(x).classList.toggle('on',x===p)});
+  $('nPlay').classList.toggle('on',p==='play');
+  if(p==='play')renderPlay();else $('nxt').classList.remove('on');
+  document.querySelector('main').scrollTop=0;
+}
+$('nPlay').onclick=function(){soft();go('play')};
+Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(e){e.onclick=function(){go(e.dataset.go)}});
+</script>
+</body>
+</html>
